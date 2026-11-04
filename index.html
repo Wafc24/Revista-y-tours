@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Plataforma Ecosistema Misión Saber • Libros y Tours Pedagógicos</title>
+  <link rel="stylesheet" href="css/styles.css?v=2.9">
+  <link rel="stylesheet" href="css/theme-fisica.css?v=2.9">
+</head>
+<body>
+  <div id="app-container">
+
+    <!-- Encabezado Superior Maestro Unificado -->
+    <header class="top-header">
+      <div class="header-left">
+        <!-- Botón Lanzador de Centro de Control / Hub -->
+        <button class="btn-hub-launcher active" id="btn-hub-launcher" title="Abrir Centro de Control y Biblioteca (H)">
+          <svg viewBox="0 0 24 24"><path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"/></svg>
+          <span>Ecosistema</span>
+        </button>
+
+        <!-- Selector de Libro (Modo Revista) -->
+        <div class="library-dropdown-container" id="library-container">
+          <button class="library-trigger-btn" id="btn-library" title="Cambiar de libro en la revista" aria-expanded="false">
+            <svg class="header-icon" viewBox="0 0 24 24">
+              <path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/>
+            </svg>
+            <div class="book-info-header">
+              <span class="book-title" id="book-title">Cargando libro...</span>
+              <span class="book-badge" id="book-badge">Colección</span>
+            </div>
+            <svg class="chevron-icon" viewBox="0 0 24 24">
+              <path d="M7 10l5 5 5-5z"/>
+            </svg>
+          </button>
+
+          <!-- Menú desplegable con las portadas de los 4 libros -->
+          <div class="library-dropdown-menu" id="library-menu">
+            <div class="dropdown-header">
+              <div class="dropdown-title">
+                <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+                <span>Biblioteca de Libros</span>
+              </div>
+              <span class="library-count-tag" id="library-count-tag">4 Libros</span>
+            </div>
+            <div class="books-grid" id="books-grid">
+              <!-- Renderizado dinámico de tarjetas de libros -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Selector de Tour Pedagógico (Visible en Modo Tour) -->
+        <div class="library-dropdown-container" id="tour-dropdown-container" style="display: none;">
+          <button class="library-trigger-btn" id="btn-tour-selector" title="Cambiar disciplina de Tour Pedagógico" aria-expanded="false">
+            <span id="active-tour-icon" style="font-size: 1.1rem;">🎓</span>
+            <div class="book-info-header">
+              <span class="book-title" id="active-tour-title">3° Matemáticas</span>
+              <span class="book-badge" id="active-tour-badge" style="background: rgba(255, 203, 63, 0.2); color: var(--color-yellow); border-color: rgba(255, 203, 63, 0.4);">Fases 1 a 4</span>
+            </div>
+            <svg class="chevron-icon" viewBox="0 0 24 24">
+              <path d="M7 10l5 5 5-5z"/>
+            </svg>
+          </button>
+
+          <!-- Menú de selección de Tours -->
+          <div class="library-dropdown-menu" id="tour-menu">
+            <div class="dropdown-header">
+              <div class="dropdown-title">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="var(--accent)"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+                <span>Tours Pedagógicos</span>
+              </div>
+              <span class="library-count-tag" id="tours-count-tag">2 Tours</span>
+            </div>
+            <div class="books-grid" id="tours-menu-grid">
+              <!-- Renderizado dinámico de tours -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Selector Central Segmentado de Modo -->
+      <div class="header-center">
+        <div class="mode-segmented-control">
+          <button class="mode-seg-btn" id="seg-btn-flipbook" data-target-mode="flipbook" title="Modo Revista Digital (Lectura libre)">
+            <svg viewBox="0 0 24 24"><path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zm-1 14c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v12z"/></svg>
+            <span>Revista Digital</span>
+          </button>
+          <button class="mode-seg-btn" id="seg-btn-tour" data-target-mode="tour" title="Modo Tour Pedagógico (Paso a paso con zoom)">
+            <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+            <span>Tours Pedagógicos</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Acciones de Cabecera Derecha -->
+      <div class="top-actions">
+        <!-- Selector de Avatar del Estudiante / Comandante -->
+        <div class="avatar-menu-container" id="avatar-container">
+          <button class="avatar-pill-btn" id="btn-avatar-selector" title="Seleccionar tu Personaje / Comandante" aria-label="Comandante">
+            <img src="assets/avatares/avatar_char1.png" id="top-avatar-thumb" class="top-avatar-img" alt="Avatar">
+            <span class="top-avatar-name" id="top-avatar-name">Comandante Mateo</span>
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+          </button>
+
+          <!-- Menú desplegable de avatares -->
+          <div class="avatar-dropdown-menu" id="avatar-menu" style="display: none;">
+            <div class="avatar-menu-header">
+              <span class="avatar-menu-title">🚀 Elige tu Comandante</span>
+              <span class="avatar-menu-sub">Tu compañero en el libro y los tours</span>
+            </div>
+            <div class="avatar-options-grid" id="avatar-options-grid">
+              <!-- Rellenado dinámicamente -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Selector y Menú de Efectos de Sonido -->
+        <div class="sound-menu-container" id="sound-container">
+          <button class="tool-btn active" id="btn-sound" title="Configurar sonido de páginas (S)" aria-label="Sonido">
+            <svg id="sound-icon-on" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+            <svg id="sound-icon-off" class="hidden" viewBox="0 0 24 24" style="display: none;"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+          </button>
+
+          <!-- Menú desplegable de efectos de sonido -->
+          <div class="sound-dropdown-menu" id="sound-menu">
+            <div class="sound-menu-header">
+              <div class="sound-menu-title">
+                <svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                <span>Efectos de Paso de Página</span>
+              </div>
+              <button class="sound-mute-toggle" id="btn-sound-mute" title="Silenciar / Activar">Activo</button>
+            </div>
+
+            <!-- Control de Volumen -->
+            <div class="sound-volume-box">
+              <span class="volume-label">Volumen:</span>
+              <input type="range" class="sound-volume-slider" id="sound-volume-slider" min="0" max="100" value="70" title="Ajustar volumen">
+              <span class="volume-value" id="sound-volume-value">70%</span>
+            </div>
+
+            <div class="sound-options-list" id="sound-options-list">
+              <!-- Rellenado dinámicamente con los 6 perfiles -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Botón de ayuda/atajos -->
+        <button class="tool-btn" id="btn-help" title="Atajos de teclado (?)" aria-label="Ayuda">
+          <svg viewBox="0 0 24 24"><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></svg>
+        </button>
+        <!-- Botón de pantalla completa -->
+        <button class="tool-btn" id="btn-fullscreen" title="Pantalla completa (F)" aria-label="Pantalla completa">
+          <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Toast de Notificación -->
+    <div class="toast-notification" id="toast-notification"></div>
+
+    <!-- ======================================================================
+         VISTA 1: CENTRO DE CONTROL / HUB DASHBOARD PRINCIPAL
+         ====================================================================== -->
+    <div id="view-hub" class="app-view active">
+      <div class="hub-container">
+        <!-- Filtros de la Galería -->
+        <div class="hub-filters-bar">
+          <div class="hub-filter-tabs">
+            <button class="hub-tab-btn active" data-filter="all">Todos los Recursos</button>
+            <button class="hub-tab-btn" data-filter="flipbook">📖 Revistas Digitales (4)</button>
+            <button class="hub-tab-btn" data-filter="tour">🎓 Tours Pedagógicos (2)</button>
+          </div>
+          <div class="hub-search-box">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--text-muted)"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            <input type="text" id="hub-search-input" placeholder="Buscar libro o tour...">
+          </div>
+        </div>
+
+        <!-- Grid de Recursos -->
+        <div class="hub-cards-grid" id="hub-cards-grid">
+          <!-- Renderizado dinámico de tarjetas -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================================================================
+         VISTA 2: VISOR DE REVISTA DIGITAL (FLIPBOOK 3D)
+         ====================================================================== -->
+    <div id="view-flipbook" class="app-view">
+      <!-- Indicador de modo Zoom -->
+      <div class="zoom-mode-indicator" id="zoom-mode-indicator">
+        <span>🔍 Modo Zoom: Arrastra para moverte • Doble clic o Esc para restablecer</span>
+      </div>
+
+      <!-- Badge flotante de sugerencia de Tour (aparece cuando estás en la unidad del tour) -->
+      <div class="flipbook-tour-suggestion" id="flipbook-tour-suggestion" style="display: none;">
+        <span id="suggestion-icon">🎓</span>
+        <span id="suggestion-text">Ver Tour Pedagógico de esta Unidad</span>
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+      </div>
+
+      <!-- Copilot Pedagógico Flotante (Compañero Interactivo de Misión) -->
+      <div class="copilot-floating-widget" id="copilot-widget">
+        <div class="copilot-speech-bubble" id="copilot-speech-bubble" style="display: none;">
+          <button class="copilot-close-btn" id="btn-close-copilot-bubble" type="button" title="Ocultar consejo">✕</button>
+          <div class="copilot-bubble-header">
+            <span class="copilot-bubble-name" id="copilot-bubble-name">Comandante Mateo</span>
+            <span class="copilot-bubble-badge" id="copilot-bubble-badge">Tip de Misión</span>
+          </div>
+          <div class="copilot-bubble-text" id="copilot-bubble-text">
+            ¡Hola! Estoy listo para acompañarte en esta misión de aprendizaje.
+          </div>
+          <div class="copilot-bubble-actions" id="copilot-bubble-actions" style="display: none;">
+            <button class="copilot-action-btn" id="copilot-btn-action" type="button">
+              <span>🚀</span> <span id="copilot-action-label">Iniciar Tour Guiado</span>
+            </button>
+          </div>
+        </div>
+
+        <button class="copilot-trigger-btn" id="btn-copilot-trigger" type="button" title="Consejos de tu Comandante">
+          <div class="copilot-glow-ring"></div>
+          <img src="assets/avatares/avatar_char1.png" id="copilot-trigger-img" class="copilot-trigger-img" alt="Comandante">
+          <span class="copilot-notification-dot" id="copilot-notification-dot" style="display: none;">!</span>
+        </button>
+      </div>
+
+      <!-- Flechas laterales de navegación rápida -->
+      <button class="nav-arrow prev" id="btn-arrow-prev" title="Página anterior (←)" aria-label="Anterior">
+        <svg viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/></svg>
+      </button>
+      <button class="nav-arrow next" id="btn-arrow-next" title="Página siguiente (→)" aria-label="Siguiente">
+        <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+      </button>
+
+      <!-- Área principal de visualización con soporte de Zoom & Drag -->
+      <main class="viewport-area" id="viewport-area">
+        <div id="zoom-viewport">
+          <div id="book-centering-wrapper">
+            <div id="flipbook"></div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Barra de herramientas flotante inferior -->
+      <footer class="bottom-bar">
+        <!-- Scrubber -->
+        <div class="scrubber-container">
+          <input type="range" class="scrubber-slider" id="page-slider" min="1" max="1" value="1" title="Desliza para cambiar de página">
+        </div>
+
+        <!-- Barra principal de botones -->
+        <div class="toolbar">
+          <button class="tool-btn" id="btn-first" title="Primera página (Inicio)" aria-label="Primera página">
+            <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+          </button>
+          <button class="tool-btn" id="btn-prev" title="Página anterior (←)" aria-label="Anterior">
+            <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+          </button>
+
+          <div class="page-counter">
+            <input type="number" id="page-input" class="page-input" min="1" value="1">
+            <span>/</span>
+            <span id="total-pages">0</span>
+          </div>
+
+          <button class="tool-btn" id="btn-next" title="Página siguiente (→)" aria-label="Siguiente">
+            <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+          </button>
+          <button class="tool-btn" id="btn-last" title="Última página (Fin)" aria-label="Última página">
+            <svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+          </button>
+
+          <div class="toolbar-separator"></div>
+
+          <button class="tool-btn" id="btn-zoom-out" title="Reducir zoom (-)" aria-label="Reducir zoom">
+            <svg viewBox="0 0 24 24"><path d="M19 13H5v-2h14v2z"/></svg>
+          </button>
+          <span class="zoom-level-badge" id="zoom-badge">100%</span>
+          <button class="tool-btn" id="btn-zoom-in" title="Aumentar zoom (+)" aria-label="Aumentar zoom">
+            <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+          </button>
+          <button class="tool-btn" id="btn-zoom-reset" title="Restablecer zoom (0 o Esc)" aria-label="Restablecer zoom">
+            <svg viewBox="0 0 24 24"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
+          </button>
+          <div class="toolbar-separator"></div>
+          <button class="tool-btn active" id="btn-toggle-structure-labels" title="Mostrar/ocultar Etiquetas Didácticas (E)" aria-label="Etiquetas">
+            <svg viewBox="0 0 24 24" style="width: 17px; height: 17px; fill: currentColor;"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>
+            <span style="font-size: 0.72rem; font-weight: 800; margin-left: 3px;">Etiquetas</span>
+          </button>
+        </div>
+      </footer>
+    </div>
+
+    <!-- ======================================================================
+         VISTA 3: TOUR PEDAGÓGICO INTEGRADO (50% / 50%)
+         ====================================================================== -->
+    <div id="view-tour" class="app-view">
+      <!-- Barra superior de Pasos / Fases del Tour -->
+      <div class="tour-stepper-header">
+        <div class="tour-title-group">
+          <div class="tour-subject-icon" id="tour-subject-icon">📐</div>
+          <div class="tour-subject-text">
+            <h4 id="tour-display-title">Misión Saber 3° • Matemáticas</h4>
+            <span id="tour-display-sub">Educación Básica Primaria • Enfoque por Fases</span>
+          </div>
+        </div>
+        <div class="tour-steps-row" id="tour-steps-nav">
+          <!-- Renderizado dinámico de Fases o Pasos -->
+        </div>
+        <!-- Controles de Auto-Presentación y Narración Guiada -->
+        <div class="tour-autopilot-controls">
+          <button class="btn-auto-tour" id="btn-auto-tour" title="Iniciar o pausar Auto-Presentación interactiva paso a paso">
+            <span class="auto-tour-icon" id="auto-tour-icon">▶</span>
+            <span class="auto-tour-label" id="auto-tour-label">Auto-Presentación</span>
+          </button>
+          <button class="btn-auto-stop hidden" id="btn-auto-stop" title="Detener Auto-Presentación y volver al control manual">
+            <span>⏹</span>
+          </button>
+          <button class="btn-voice-toggle active" id="btn-voice-toggle" title="Voz del Avatar Narrador: Activa / Silenciada">
+            <span id="voice-toggle-icon">🔊</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Layout Split 50% / 50% -->
+      <div class="tour-split-layout">
+        <!-- Columna Izquierda: Visor del Libro y Hotspots -->
+        <div class="tour-viewport-side">
+          <div class="tour-subtabs-nav" id="tour-subtabs-nav">
+            <!-- Subtabs de páginas -->
+          </div>
+
+          <div class="tour-page-stage" id="tour-page-stage">
+            <div class="tour-zoom-wrapper" id="tour-zoom-wrapper">
+              <div class="tour-page-frame" id="tour-page-frame">
+                <img id="tour-page-img" class="tour-page-img" src="" alt="Página del libro">
+                <div class="tour-hotspots-layer" id="tour-hotspots-layer">
+                  <!-- Hotspots circulares inyectados dinámicamente -->
+                </div>
+                <!-- Avatar Guía en la Hoja con Bocadillo Dinámico -->
+                <div class="tour-page-avatar-guide" id="tour-page-avatar-guide">
+                  <div class="page-avatar-speech-bubble" id="page-avatar-speech-bubble">
+                    <span class="page-avatar-bubble-text" id="page-avatar-bubble-text">Título de la misión</span>
+                  </div>
+                  <img id="tour-page-avatar-img" class="page-avatar-img" src="assets/avatares/avatar_char1.png" alt="Guía">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tour-zoom-toolbar">
+            <span id="tour-zoom-status">📄 Hoja completa (100%) • Clic en un número para inspeccionar</span>
+            <button class="btn-zoom-reset" id="btn-tour-zoom-reset">Restablecer (100%)</button>
+          </div>
+        </div>
+
+        <!-- Columna Derecha: Propósito Pedagógico y Detalle -->
+        <div class="tour-detail-side">
+          <!-- Cuadro de Propósito Pedagógico Obligatorio Arriba -->
+          <div class="tour-purpose-box">
+            <div class="tour-purpose-badge" id="tour-purpose-badge">Propósito Pedagógico</div>
+            <div class="tour-purpose-text" id="tour-purpose-text">Cargando propósito...</div>
+          </div>
+
+          <!-- Avatar Guía Narrador Interactivo con Ondas de Audio -->
+          <div class="tour-avatar-narrator" id="tour-avatar-narrator">
+            <div class="avatar-speaker-container">
+              <div class="avatar-glow-ring" id="avatar-glow-ring"></div>
+              <img id="tour-avatar-img" class="avatar-speaker-img" src="assets/avatar_nino.png" alt="Avatar Guía">
+              <div class="voice-soundwaves" id="voice-soundwaves">
+                <span></span><span></span><span></span><span></span>
+              </div>
+            </div>
+            <div class="avatar-speech-bubble" id="avatar-speech-bubble">
+              <div class="avatar-speech-header">
+                <span class="avatar-badge-tag" id="avatar-speaker-name">Prof. Cuántico • Guía Saber 11</span>
+                <span class="avatar-voice-state-pill" id="avatar-voice-state-pill">Voz IA: Gonzalo</span>
+              </div>
+              <div class="avatar-speech-text" id="avatar-speech-text">
+                ¡Bienvenido a la Misión Saber 11°! Haz clic en cualquier punto de la hoja o presiona «Auto-Presentación» para comenzar el recorrido narrado paso a paso.
+              </div>
+            </div>
+          </div>
+
+          <!-- Selector de Puntos del Paso Actual -->
+          <div class="tour-points-selector" id="tour-points-selector">
+            <!-- Chips de puntos -->
+          </div>
+
+          <!-- Tarjeta de Detalle del Punto Seleccionado con Avatar -->
+          <div class="tour-active-explanation-card">
+            <div class="tour-expl-card-inner">
+              <!-- Columna Avatar en Gran Formato -->
+              <div class="tour-expl-avatar-side">
+                <div class="tour-expl-avatar-glow"></div>
+                <img id="tour-expl-avatar-img" class="tour-expl-avatar-img" src="assets/avatares/avatar_char1.png" alt="Avatar Guía">
+              </div>
+
+              <!-- Columna Contenido Explicativo -->
+              <div class="tour-expl-content-side">
+                <div class="tour-expl-header">
+                  <div class="tour-expl-title-row">
+                    <div class="tour-expl-num" id="tour-expl-num">1</div>
+                    <div class="tour-expl-title" id="tour-expl-title">Título del punto</div>
+                  </div>
+                  <span class="tour-expl-page-badge" id="tour-expl-page-badge">Pág. 180</span>
+                </div>
+
+                <div class="tour-expl-body" id="tour-expl-body">
+                  Explicación pedagógica detallada.
+                </div>
+
+                <div class="tour-expl-pedagogy" id="tour-expl-pedagogy">
+                  Enfoque metacognitivo y mediación docente.
+                </div>
+              </div>
+            </div>
+
+            <div class="tour-expl-actions">
+              <button class="btn-tour-zoom-action" id="btn-tour-zoom-action">
+                🔍 Enfocar en la Hoja (Zoom 1.95x)
+              </button>
+              <button class="btn-tour-flipbook-link" id="btn-tour-to-flipbook">
+                📖 Hojear en Modo Revista
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pantalla de Carga (Oculta por defecto para no bloquear el Ecosistema) -->
+    <div id="loading-screen" class="hidden">
+      <div class="spinner"></div>
+      <div class="loading-text" id="loading-text">Cargando Ecosistema Misión Saber...</div>
+    </div>
+
+    <!-- Pantalla de Estado Vacío -->
+    <div id="empty-state" class="empty-state" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 95;">
+      <h3>¡Aún no se han generado las páginas del libro!</h3>
+      <p style="margin-top: 10px; color: var(--text-muted);">
+        Para preparar tu revista o libro, ejecuta el siguiente comando en la terminal:
+      </p>
+      <code>python convert_library.py</code>
+    </div>
+
+    <!-- Modal de Atajos de Teclado -->
+    <div class="modal-backdrop" id="modal-help">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3>Atajos de Teclado y Controles</h3>
+          <button class="modal-close" id="modal-close">&times;</button>
+        </div>
+        <div class="shortcuts-list">
+          <div class="shortcut-item">
+            <span>Abrir Centro de Control (Hub)</span>
+            <div><span class="key-badge">H</span></div>
+          </div>
+          <div class="shortcut-item">
+            <span>Modo Revista Digital</span>
+            <div><span class="key-badge">R</span></div>
+          </div>
+          <div class="shortcut-item">
+            <span>Modo Tours Pedagógicos</span>
+            <div><span class="key-badge">T</span></div>
+          </div>
+          <div class="shortcut-item">
+            <span>Abrir Biblioteca de Libros</span>
+            <div><span class="key-badge">B</span></div>
+          </div>
+          <div class="shortcut-item">
+            <span>Configurar Efectos de Sonido</span>
+            <div><span class="key-badge">S</span></div>
+          </div>
+          <div class="shortcut-item">
+            <span>Página siguiente / anterior</span>
+            <div><span class="key-badge">→</span> <span class="key-badge">←</span></div>
+          </div>
+          <div class="shortcut-item">
+            <span>Primera / Última página</span>
+            <div><span class="key-badge">Inicio</span> <span class="key-badge">Fin</span></div>
+          </div>
+          <div class="shortcut-item">
+            <span>Aumentar / Reducir zoom</span>
+            <div><span class="key-badge">+</span> <span class="key-badge">-</span> o rueda del ratón</div>
+          </div>
+          <div class="shortcut-item">
+            <span>Restablecer zoom / Cerrar paneles</span>
+            <div><span class="key-badge">0</span> <span class="key-badge">Esc</span></div>
+          </div>
+          <div class="shortcut-item">
+            <span>Pantalla completa</span>
+            <div><span class="key-badge">F</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Catálogo Maestro Multi-Libro Offline -->
+  <script src="books/library-manifest.js"></script>
+  <!-- Fallback de manifiesto individual -->
+  <script src="pages/pages-manifest.js"></script>
+  <!-- Catálogo Maestro de Tours Guiados Pedagógicos -->
+  <script src="js/tours-catalog.js?v=2.9"></script>
+  <!-- Motor de simulación física de hojas StPageFlip (100% offline) -->
+  <script src="js/libs/page-flip.browser.js"></script>
+  <!-- Controlador de Zoom y Paneo -->
+  <script src="js/zoom-handler.js"></script>
+  <!-- Catálogo de Hotspots Pedagógicos (DBA y Evidencias en Revistas) -->
+  <script src="js/pedagogical-hotspots.js?v=2.9"></script>
+  <!-- Controlador Principal de la Plataforma Unificada -->
+  <script src="js/app.js?v=2.9"></script>
+</body>
+</html>

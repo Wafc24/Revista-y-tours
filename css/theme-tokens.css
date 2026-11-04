@@ -1,0 +1,160 @@
+/* ==========================================================================
+   DESIGN TOKENS - MISIÓN SABER 3° (PALETA CÓSMICA & CUBOS LÚDICOS)
+   Extraído de la cabina de mando y elementos lúdicos de Matemáticas.
+   ========================================================================== */
+
+:root {
+  /* -------------------------------------------------------------------------
+     1. FONDOS Y AMBIENTACIÓN ESPACIAL
+     ------------------------------------------------------------------------- */
+  --bg-space-dark: #180806;          /* Vacío exterior y sombras profundas */
+  --bg-cockpit-deep: #2a0e08;        /* Suelo y estructura de la cabina */
+  --bg-cockpit-surface: rgba(42, 14, 8, 0.78); /* Paneles Glassmorphism */
+  --bg-cockpit-card: rgba(62, 22, 13, 0.65);    /* Tarjetas y ventanas */
+  --ambient-orange: #ef6026;         /* Luz ambiental de molduras */
+  --ambient-tangerine: #ff8a3d;      /* Resplandor cálido central */
+
+  /* -------------------------------------------------------------------------
+     2. COLORES PRIMARIOS DE BOTONES (Inspirados en los 4 Cubos Centrales)
+     ------------------------------------------------------------------------- */
+  /* Cubo Rojo (+ / -) : Acciones Primarias, Desafíos, Retos y Alertas */
+  --btn-cube-red: #f01f24;
+  --btn-cube-red-hover: #ff383d;
+  --btn-cube-red-glow: rgba(240, 31, 36, 0.45);
+
+  /* Cubo Azul (×) : Navegación, Ciencia, Módulos y Enlaces */
+  --btn-cube-blue: #2d68b8;
+  --btn-cube-blue-hover: #3b82f6;
+  --btn-cube-blue-glow: rgba(45, 104, 184, 0.45);
+
+  /* Cubo Verde (5) : Éxito, Validaciones, Avances y Respuestas Correctas */
+  --btn-cube-green: #5dc147;
+  --btn-cube-green-hover: #72d65c;
+  --btn-cube-green-glow: rgba(93, 193, 71, 0.45);
+
+  /* Cubo Amarillo/Ámbar (3 / 2) : Saberes Previos, Alertas y Atención */
+  --btn-cube-amber: #f59e0b;
+  --btn-cube-amber-hover: #fbbf24;
+  --btn-cube-amber-glow: rgba(245, 158, 11, 0.45);
+
+  /* -------------------------------------------------------------------------
+     3. ACENTOS HOLOGRÁFICOS E INSTRUMENTALES
+     ------------------------------------------------------------------------- */
+  /* Magenta (Escuadra geométrica y herramientas) */
+  --accent-magenta: #cb69a4;
+  --accent-magenta-glow: rgba(203, 105, 164, 0.45);
+
+  /* Cyan (Pedestal holográfico, rayo de luz y gráfica de barras) */
+  --accent-cyan: #38bdf8;
+  --accent-cyan-glow: rgba(56, 189, 248, 0.5);
+
+  /* Oro/Estelar (Símbolos flotantes y números) */
+  --accent-gold: #fde047;
+
+  /* -------------------------------------------------------------------------
+     4. TIPOGRAFÍA Y TEXTOS
+     ------------------------------------------------------------------------- */
+  --text-white: #ffffff;             /* Números y títulos principales neón */
+  --text-warm-light: #fed7aa;        /* Subtítulos y textos de lectura */
+  --text-warm-muted: #ba7e6d;        /* Metadatos, pies de página y etiquetas */
+
+  /* -------------------------------------------------------------------------
+     5. BORDES Y DEGRADADOS GLASSMORPHISM
+     ------------------------------------------------------------------------- */
+  --border-glass-warm: rgba(255, 138, 61, 0.22);
+  --border-glass-bright: rgba(255, 255, 255, 0.25);
+
+  /* Gradiente oficial de la cabina */
+  --gradient-cockpit: radial-gradient(
+    circle at 50% 35%,
+    #4a180e 0%,
+    #240b07 60%,
+    #140503 100%
+  );
+
+  /* Gradiente para botones destacados */
+  --gradient-btn-red: linear-gradient(135deg, #f01f24 0%, #ff6b4a 100%);
+  --gradient-btn-blue: linear-gradient(135deg, #2d68b8 0%, #38bdf8 100%);
+  --gradient-btn-green: linear-gradient(135deg, #5dc147 0%, #86efac 100%);
+  --gradient-btn-amber: linear-gradient(135deg, #f59e0b 0%, #fde047 100%);
+}
+
+/* ==========================================================================
+   CLASES DE UTILIDAD PARA BOTONES CON LA PALETA DEL CUBO
+   ========================================================================== */
+
+.btn-space {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 10px 22px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  user-select: none;
+}
+
+.btn-space:hover {
+  transform: translateY(-2px);
+}
+
+.btn-space:active {
+  transform: translateY(1px);
+}
+
+/* 1. Botón Rojo (Cubo Operaciones) */
+.btn-cube-red {
+  background: var(--gradient-btn-red);
+  box-shadow: 0 4px 18px var(--btn-cube-red-glow), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+}
+.btn-cube-red:hover {
+  box-shadow: 0 6px 24px rgba(240, 31, 36, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* 2. Botón Azul (Cubo Multiplicación) */
+.btn-cube-blue {
+  background: var(--gradient-btn-blue);
+  box-shadow: 0 4px 18px var(--btn-cube-blue-glow), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+}
+.btn-cube-blue:hover {
+  box-shadow: 0 6px 24px rgba(45, 104, 184, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* 3. Botón Verde (Cubo Numérico) */
+.btn-cube-green {
+  background: var(--gradient-btn-green);
+  box-shadow: 0 4px 18px var(--btn-cube-green-glow), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  color: #0d3807;
+}
+.btn-cube-green:hover {
+  box-shadow: 0 6px 24px rgba(93, 193, 71, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* 4. Botón Ámbar (Cubo Oro) */
+.btn-cube-amber {
+  background: var(--gradient-btn-amber);
+  box-shadow: 0 4px 18px var(--btn-cube-amber-glow), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  color: #5c3b02;
+}
+.btn-cube-amber:hover {
+  box-shadow: 0 6px 24px rgba(245, 158, 11, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* Panel Glassmorphism con tinte de cabina */
+.glass-cockpit-panel {
+  background: var(--bg-cockpit-surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glass-warm);
+  border-radius: 18px;
+  box-shadow: 0 15px 35px rgba(20, 6, 3, 0.65), inset 0 1px 0 rgba(255, 138, 61, 0.15);
+}

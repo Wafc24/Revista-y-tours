@@ -1,0 +1,40 @@
+{
+  "books": [
+    {
+      "id": "ms9",
+      "title": "Misión Saber 9° • Lenguaje",
+      "subtitle": "Misión 1: Veo, Interpreto y Comunico mi Entorno",
+      "grade": "9°",
+      "badge": "9° SECUNDARIA",
+      "totalPages": 29,
+      "baseWidth": 1241,
+      "baseHeight": 1536,
+      "aspectRatio": 0.8079,
+      "pages": [
+        "books/ms9/page_001.jpg", "books/ms9/page_002.jpg", "books/ms9/page_003.jpg", "books/ms9/page_004.jpg", "books/ms9/page_005.jpg",
+        "books/ms9/page_006.jpg", "books/ms9/page_007.jpg", "books/ms9/page_008.jpg", "books/ms9/page_009.jpg", "books/ms9/page_010.jpg",
+        "books/ms9/page_011.jpg", "books/ms9/page_012.jpg", "books/ms9/page_013.jpg", "books/ms9/page_014.jpg", "books/ms9/page_015.jpg",
+        "books/ms9/page_016.jpg", "books/ms9/page_017.jpg", "books/ms9/page_018.jpg", "books/ms9/page_019.jpg", "books/ms9/page_020.jpg",
+        "books/ms9/page_021.jpg", "books/ms9/page_022.jpg", "books/ms9/page_023.jpg", "books/ms9/page_024.jpg", "books/ms9/page_025.jpg",
+        "books/ms9/page_026.jpg", "books/ms9/page_027.jpg", "books/ms9/page_028.jpg", "books/ms9/page_029.jpg"
+      ]
+    },
+    {
+      "id": "ms11_t2",
+      "title": "Misión Saber 11° • Matemáticas (Tomo 2)",
+      "subtitle": "Misión 1: Numérico - Variacional (Págs. 1 a 17)",
+      "grade": "11°",
+      "badge": "11° MEDIA",
+      "totalPages": 17,
+      "baseWidth": 1241,
+      "baseHeight": 1536,
+      "aspectRatio": 0.8079,
+      "pages": [
+        "books/ms11_tomo2/page_001.jpg", "books/ms11_tomo2/page_002.jpg", "books/ms11_tomo2/page_003.jpg", "books/ms11_tomo2/page_004.jpg", "books/ms11_tomo2/page_005.jpg",
+        "books/ms11_tomo2/page_006.jpg", "books/ms11_tomo2/page_007.jpg", "books/ms11_tomo2/page_008.jpg", "books/ms11_tomo2/page_009.jpg", "books/ms11_tomo2/page_010.jpg",
+        "books/ms11_tomo2/page_011.jpg", "books/ms11_tomo2/page_012.jpg", "books/ms11_tomo2/page_013.jpg", "books/ms11_tomo2/page_014.jpg", "books/ms11_tomo2/page_015.jpg",
+        "books/ms11_tomo2/page_016.jpg", "books/ms11_tomo2/page_017.jpg"
+      ]
+    }
+  ]
+}

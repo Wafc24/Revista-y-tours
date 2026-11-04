@@ -1,0 +1,53 @@
+/**
+ * Paleta de Colores y Tokens de Diseño - Física 11° (Misión Saber 11)
+ * ==================================================================
+ * Inspirada en la portada del reactor atómico, rayos de energía (E=mc²),
+ * anillos orbitales dorados y telemetría holográfica cian.
+ */
+
+:root {
+  /* ========================================================================
+     PALETA OFICIAL ECOSISTEMA MISIÓN SABER (Adobe Color Swatch)
+     ======================================================================== */
+  --color-slate-bg: #29313E;    /* RGB(41, 49, 62)   - Pizarra Azul Medianoche (Fondo Principal) */
+  --color-cyan:     #2FAECF;    /* RGB(47, 174, 207) - Azul Cian Eléctrico / Cerúleo */
+  --color-yellow:   #FFCB3F;    /* RGB(255, 203, 63) - Amarillo Dorado / Ámbar Brillante */
+  --color-cream:    #FBE6C0;    /* RGB(251, 230, 192)- Crema Cálido / Vainilla Suave */
+  --color-coral:    #D04931;    /* RGB(208, 73, 49)  - Terracota / Rojo Coral Vibrante */
+
+  --palette-pink: var(--color-coral);
+  --palette-orange: var(--color-coral);
+  --palette-yellow: var(--color-yellow);
+  --palette-green: var(--color-cyan);
+  --palette-lavender: var(--color-cream);
+  --palette-cyan: var(--color-cyan);
+
+  /* Fondos del Reactor y Cabina */
+  --bg-reactor-deep: #29313E;
+  --bg-cockpit-carbon: #1E2530;
+  --bg-cockpit-elevated: #242C38;
+  --bg-panel-border: rgba(251, 230, 192, 0.20);
+  --bg-panel-border-bright: rgba(47, 174, 207, 0.65);
+
+  /* Energía Cuántica (Amarillos, Dorados y Terracota) */
+  --energy-gold-bright: #FFCB3F;
+  --energy-gold-primary: #FFCB3F;
+  --energy-amber-plasma: #D04931;
+  --energy-core-white: #FFFFFF;
+
+  /* Telemetría Digital HUD (Cian Eléctrico) */
+  --hud-cyan-electric: #2FAECF;
+  --hud-cyan-glow: rgba(47, 174, 207, 0.35);
+  --hud-cyan-dark: #1E2530;
+
+  /* Tipografía y Lectura */
+  --text-pure-white: #FFFFFF;
+  --text-gold-light: #FBE6C0;
+  --text-dim-gold: #CBD5E1;
+
+  /* Sombras y Resplandores Luminosos */
+  --glow-gold-lg: 0 0 35px rgba(255, 203, 63, 0.4), 0 0 15px rgba(208, 73, 49, 0.5);
+  --glow-gold-sm: 0 0 14px rgba(255, 203, 63, 0.45);
+  --glow-cyan-sm: 0 0 14px rgba(47, 174, 207, 0.4);
+  --card-shadow: 0 18px 45px rgba(0, 0, 0, 0.75), 0 0 20px rgba(0, 0, 0, 0.5);
+}

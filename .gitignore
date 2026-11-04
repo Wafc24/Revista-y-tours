@@ -1,0 +1,39 @@
+# Archivos del Sistema Operativo
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# Entornos de Desarrollo y Editores
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+
+# Archivos Temporales y Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.tmp
+*.bak
+*.orig
+
+# Dependencias (si se usan herramientas Node en el futuro)
+node_modules/
+.npm/
+
+# Carpetas de trabajo temporal y capturas de calibración interna
+Tomo 2_misión_1_Matemáticas/
+Tomo 2_misi*n_1_Matem*ticas/
+scratch/
+temp/
