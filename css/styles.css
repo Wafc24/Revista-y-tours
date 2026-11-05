@@ -3822,3 +3822,91 @@ body.hide-structure-labels .structure-highlight-box {
   opacity: 1 !important;
   visibility: visible !important;
 }
+
+
+/* ==========================================================================
+   ETIQUETAS DIDÁCTICAS ESTRUCTURALES EN COLOR VERDE ESMERALDA (9° Y 11°)
+   ========================================================================== */
+.structure-badge-pill {
+  background: linear-gradient(135deg, #10b981 0%, #047857 100%) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.85) !important;
+  color: #ffffff !important;
+  font-weight: 800 !important;
+  box-shadow: 0 3px 12px rgba(16, 185, 129, 0.45) !important;
+  letter-spacing: 0.2px !important;
+  font-size: 0.72rem !important;
+  padding: 4px 10px !important;
+  border-radius: 12px !important;
+  cursor: pointer !important;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.structure-badge-pill:hover,
+.structure-hotspot-zone.active .structure-badge-pill {
+  transform: scale(1.08) translateY(-2px) !important;
+  background: linear-gradient(135deg, #059669 0%, #065f46 100%) !important;
+  box-shadow: 0 6px 18px rgba(16, 185, 129, 0.65) !important;
+}
+
+.structure-pulse-dot {
+  background: #a7f3d0 !important;
+  box-shadow: 0 0 8px #6ee7b7 !important;
+}
+
+/* Recuadro de resaltado verde que enmarca el contenido */
+.structure-highlight-box {
+  position: absolute;
+  pointer-events: none;
+  border: 2px dashed rgba(16, 185, 129, 0.65) !important;
+  background: rgba(16, 185, 129, 0.05) !important;
+  border-radius: 8px;
+  transition: all 0.25s ease;
+  z-index: 15;
+}
+
+.structure-highlight-box.active {
+  border: 2.5px solid #10b981 !important;
+  background: rgba(16, 185, 129, 0.12) !important;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.5) !important;
+  animation: pulse-border-green 1.8s infinite alternate ease-in-out !important;
+}
+
+@keyframes pulse-border-green {
+  from { border-color: #10b981; box-shadow: 0 0 8px rgba(16, 185, 129, 0.3); }
+  to { border-color: #059669; box-shadow: 0 0 20px rgba(16, 185, 129, 0.6); }
+}
+
+.structure-popover-header {
+  border-bottom: 2px solid #d1fae5 !important;
+}
+
+.structure-popover-header .popover-header-title {
+  color: #065f46 !important;
+}
+
+.tag-structure {
+  background: #ecfdf5 !important;
+  color: #047857 !important;
+  border: 1px solid #a7f3d0 !important;
+  font-weight: 700 !important;
+}
+
+.structure-summary-box {
+  border-left: 3px solid #10b981 !important;
+}
+
+/* Scrollbar estilizada y suave para que siempre se visualice el contenido completo */
+.pedagogical-popover-card::-webkit-scrollbar {
+  width: 6px;
+}
+.pedagogical-popover-card::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+.pedagogical-popover-card::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 4px;
+}
+.pedagogical-popover-card::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
