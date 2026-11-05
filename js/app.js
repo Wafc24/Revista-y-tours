@@ -902,6 +902,50 @@ document.addEventListener("DOMContentLoaded", async () => {
     isPopoverPinned = false;
   }
 
+  function repositionPopoverSafely(popoverEl, targetZone) {
+    if (!popoverEl || !targetZone) return;
+    const rect = targetZone.getBoundingClientRect();
+    const popoverW = Math.min(480, window.innerWidth - 32);
+    popoverEl.style.width = `${popoverW}px`;
+
+    // Espacio vertical seguro: respetando barra superior e inferior
+    const topSafeMargin = 72; // Debajo del encabezado superior
+    const bottomSafeMargin = 70; // Por encima de la barra inferior de controles
+    const maxAllowedH = Math.max(280, window.innerHeight - topSafeMargin - bottomSafeMargin);
+    popoverEl.style.maxHeight = `${maxAllowedH}px`;
+    popoverEl.style.overflowY = "auto";
+
+    // Posicionamiento horizontal inteligente
+    let targetLeft = rect.right + 14;
+    // Si no cabe a la derecha, colocar a la izquierda
+    if (targetLeft + popoverW > window.innerWidth - 16) {
+      targetLeft = rect.left - popoverW - 14;
+    }
+    // Si tampoco cabe o se corta, centrar en la pantalla
+    if (targetLeft < 16 || targetLeft + popoverW > window.innerWidth - 16) {
+      targetLeft = Math.max(16, (window.innerWidth - popoverW) / 2);
+    }
+
+    // Posicionamiento vertical: medir altura real del cuadro ya renderizado
+    const popoverH = popoverEl.offsetHeight || 480;
+
+    // Alinear inicialmente el centro del popover con la etiqueta
+    let targetTop = rect.top + (rect.height / 2) - (popoverH / 2);
+
+    // Evitar que se corte en la parte inferior de la pantalla
+    if (targetTop + popoverH > window.innerHeight - bottomSafeMargin) {
+      targetTop = window.innerHeight - bottomSafeMargin - popoverH;
+    }
+
+    // Evitar que se esconda debajo del encabezado superior
+    if (targetTop < topSafeMargin) {
+      targetTop = topSafeMargin;
+    }
+
+    popoverEl.style.left = `${Math.round(targetLeft)}px`;
+    popoverEl.style.top = `${Math.round(targetTop)}px`;
+  }
+
   function showPedagogicalPopover(spot, zoneEl, pin = false) {
     clearTimeout(popoverHideTimer);
     const popover = getPedagogicalPopoverEl();
@@ -923,9 +967,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (spot.isStructureLabel) {
       const activeAv = getActiveAvatar();
       popover.innerHTML = `
-        <div class="popover-header structure-popover-header">
+        <div class="popover-header structure-popover-header" style="background: linear-gradient(135deg, #065f46 0%, #10b981 100%); padding: 12px 16px;">
           <div class="popover-header-title">
-            <span>🏷️</span>
+            <span>🌿</span>
             <span>${spot.label}</span>
           </div>
           <button class="popover-btn-close" type="button" id="btn-close-popover" title="Cerrar cuadro">✕</button>
@@ -1114,29 +1158,15 @@ document.addEventListener("DOMContentLoaded", async () => {
           btnToggleSol.querySelector(".solution-label").textContent = isHidden
             ? "Ocultar Solución y Justificación"
             : "Ver Solución y Justificación";
+          repositionPopoverSafely(popover, zoneEl);
         });
       }
     }
 
-    const rect = zoneEl.getBoundingClientRect();
-    const popoverW = Math.min(470, window.innerWidth * 0.9);
-    let targetLeft = rect.right + 14;
-    let targetTop = rect.top;
-
-    if (targetLeft + popoverW > window.innerWidth - 16) {
-      targetLeft = rect.left - popoverW - 14;
-    }
-    if (targetLeft < 16) {
-      targetLeft = Math.max(16, (window.innerWidth - popoverW) / 2);
-      targetTop = Math.max(70, rect.bottom + 12);
-    }
-    if (targetTop + 450 > window.innerHeight) {
-      targetTop = Math.max(70, window.innerHeight - 480);
-    }
-
-    popover.style.left = `${targetLeft}px`;
-    popover.style.top = `${targetTop}px`;
+    // Mostrar y posicionar de forma 100% segura dentro del viewport
     popover.classList.add("visible");
+    popover.scrollTop = 0;
+    repositionPopoverSafely(popover, zoneEl);
   }
 
   function injectPedagogicalHotspots(pageContainer, bookId, pageNum) {
